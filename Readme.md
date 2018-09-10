@@ -1,7 +1,7 @@
 BGCPPChallenge
 
 This project is a challenge in C++ for Altran. With a .xsd file you can create a .xml and a .json, depending on the option that you choose.
-This repository contains the source code file, in C++, and a xsd file, that is an example.
+This repository contains the source code file, in C++, and a xsd file, that is an example. 
 
 Prerequisites:
 1. Install docker and use only Linux images and containers within Docker
