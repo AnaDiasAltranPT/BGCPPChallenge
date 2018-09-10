@@ -9,17 +9,28 @@ Prerequisites:
 3. Clone the repository to your machine (https://github.com/AnaDiasAltranPT/BGCPPChallenge.git)
 
 These are the steps to execute the program:
-$ docker pull anamrdias/bgcppchallenge
-$ cd <local repository folder>
-$ docker images
-$ docker run -d -it <image id> /bin/bash
-Note: the id is from the "anamrdias/bgcppchallenge" repository
-$ docker ps
-Note: check wich container as the same image id as the step 4, and save the of that container for the next step
-$ docker exec -it <container name> /bin/bash
-$ g++ Bgcppchallenge.cpp -o bgcppchallenge
-$ ./bgcppchallenge
-$ ls
-$ cat xmlFile.xml
-$ cat jsonFile.json
-Note: The steps 10 and 11 are only to check the files created in the step 8
+	$ docker pull anamrdias/bgcppchallenge
+
+	$ docker images
+
+	$ docker run -d -it <image id> /bin/bash
+
+	Note: the id is from the "anamrdias/bgcppchallenge" repository
+
+	$ docker ps
+
+	Note: check wich container as the same image id as the step 4, and save the of that container for the next step
+
+	$ docker exec -it <container name> /bin/bash
+
+	$ g++ Bgcppchallenge.cpp -o bgcppchallenge
+
+	$ ./bgcppchallenge
+
+	$ ls
+
+	$ cat xmlFile.xml
+
+	$ cat jsonFile.json
+
+	Note: The steps 10 and 11 are only to check the files created in the step 8
