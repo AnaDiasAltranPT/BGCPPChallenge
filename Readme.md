@@ -9,6 +9,7 @@ Prerequisites:
 3. Clone the repository to your machine (https://github.com/AnaDiasAltranPT/BGCPPChallenge.git)
 
 These are the steps to execute the program:
+	
 	$ docker pull anamrdias/bgcppchallenge
 
 	$ docker images
