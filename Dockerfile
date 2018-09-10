@@ -1,5 +1,5 @@
     FROM gcc:5.5
-    COPY . /Teste
-    WORKDIR /Teste
-    RUN g++ -o Teste Teste.cpp
-    CMD ["./Teste"]
+    COPY . /BGCPPChallenge 
+    WORKDIR /BGCPPChallenge 
+    RUN g++ -o BGCPPChallenge BGCPPChallenge.cpp
+    CMD ["./BGCPPChallenge"]
