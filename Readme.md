@@ -6,14 +6,20 @@ This repository contains the source code file, in C++, and a xsd file, that is a
 Prerequisites:
 1. Install docker and use only Linux images and containers within Docker
 2. Use the docker image available in https://hub.docker.com/_/gcc/ to allow C++ development 
+3. Clone the repository to your machine (https://github.com/AnaDiasAltranPT/BGCPPChallenge.git)
 
 These are the steps to execute the program:
-1. git clone 
-2. cd <local repository folder>
-3. docker run -d -it gcc /bin/bash
-4. docker ps
-5. docker cp <source code file> <container>:/<source code file>
-6. docker exec -it <container> /bin/bash
-7. <execute steps to setup required libraries to compile and execute the program mentioned in the Readme.md>
-8. g++ <source code file(s)> -o <executable file> -l <library1> -l <library1>
-9. ./<executable file> <XSD file location>
+$ docker pull anamrdias/bgcppchallenge
+$ cd <local repository folder>
+$ docker images
+$ docker run -d -it <image id> /bin/bash
+Note: the id is from the "anamrdias/bgcppchallenge" repository
+$ docker ps
+Note: check wich container as the same image id as the step 4, and save the of that container for the next step
+$ docker exec -it <container name> /bin/bash
+$ g++ Bgcppchallenge.cpp -o bgcppchallenge
+$ ./bgcppchallenge
+$ ls
+$ cat xmlFile.xml
+$ cat jsonFile.json
+Note: The steps 10 and 11 are only to check the files created in the step 8
