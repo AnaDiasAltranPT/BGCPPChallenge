@@ -20,7 +20,7 @@ These are the steps to execute the program:
 
 	$ docker ps
 
-	Note: check wich container as the same image id as the step 4, and save the of that container for the next step
+	Note: Check wich container as the same image id as the step 4, and save the name of that container for the next step
 
 	$ docker exec -it <container name> /bin/bash
 
