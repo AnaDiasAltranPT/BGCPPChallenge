@@ -14,42 +14,24 @@ These are the steps to execute the program:
 	
 	$ docker pull anamrdias/bgcppchallenge
 	
-	$. docker run -d -it gcc /bin/bash
+	$ docker run -d -it gcc /bin/bash
 	
-	$. docker ps
-	
-	$. docker cp <source code file> <container>:/<source code file>
-	
-	$. docker exec -it <container> /bin/bash
-	
-	$. <execute steps to setup required libraries to compile and execute the program mentioned in the Readme.md>
-	
-	$. g++ <source code file(s)> -o <executable file> -l <library1> -l <library1>
-	
-	$. ./<executable file> <XSD file location
-
-	****************************************************************************************
-	$ docker images
-
-	$ docker run -d -it <image id> /bin/bash
-
-	Note: the id is from the "anamrdias/bgcppchallenge" repository
-
 	$ docker ps
-
-	Note: Check wich container as the same image id as the step 4, and save the name of that container for the next step
-
-	$ docker exec -it <container name> /bin/bash
-
-	$ g++ Bgcppchallenge.cpp -o bgcppchallenge
-
-	$ ./bgcppchallenge
-
-	$ ls
-
+	
+	$ docker cp <source code file> <container>:/<source code file>
+	
+	$ docker exec -it <container> /bin/bash
+	
+	$ <execute steps to setup required libraries to compile and execute the program mentioned in the Readme.md>
+	
+	$ g++ <source code file(s)> -o <executable file> -l <library1> -l <library1>
+	
+	$ ./<executable file> <XSD file location
+	
 	$ cat xmlFile.xml
 
 	$ cat jsonFile.json
 
-	Note: The steps 10 and 11 are only to check the files created in the step 8
+	Note: The final 2 steps are only to check the files created before, to validate the xml and json go to http://www.utilities-online.info/
+
 
