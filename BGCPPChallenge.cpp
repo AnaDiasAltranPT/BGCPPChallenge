@@ -22,9 +22,9 @@ string el = "<xsd:element";
 string complexTypeName = "";
 string xmlnsString = "";
 string xmlnsType = "";
+string file = "";
 
 static const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "abcdefghijklmnopqrstuvwxyz";
-
 int stringLength = sizeof(alphanum) - 1;
 
 vector <content> jsonElements;
@@ -54,7 +54,8 @@ int writeFile() {
 	xmlFile.open("xmlFile.xml");
 	xmlFile << "<?xml version='1.0' encoding='utf-8'?>" << endl;
 	
-	infile.open("xsdFile.xsd");
+	//infile.open("xsdFile.xsd");
+	infile.open(file);
 
 	while (!infile.eof()){
 		
@@ -96,7 +97,7 @@ int writeFile() {
 							xmlFile << "<" << xmlnsType << ":" << endEL << " " << xmlnsString << ">" << endl;
 							int jsonSize = static_cast <int> (jsonElements.size());
 							jsonElements.push_back(content());
-							jsonElements[jsonSize].line = "{ \n \"" + endEL + "\": {\n";
+							jsonElements[jsonSize].line = "{ \n \"" + xmlnsType + ":"+ endEL + "\": {\n";
 
 							int size = static_cast <int> (elementos.size());
 
@@ -235,6 +236,18 @@ int main(int argc, char *argv[]){
 		printf("Menu: \n 1 - Create a XML file \n 2 - Export the XML file to JSON \n 0 - Exit \nSelect an option:");
 
 		cin >> input;
+
+		if (argc == 2) {
+			printf("The argument supplied is %s\n", argv[1]);
+			file = argv[1];
+		}
+		else if (argc > 2) {
+			printf("Too many arguments supplied.\n");
+		}
+		else {
+			printf("At least one argument is expected.\n");
+		}
+
 
 		switch (input)
 		{
