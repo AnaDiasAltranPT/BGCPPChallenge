@@ -10,8 +10,25 @@ Prerequisites:
 
 These are the steps to execute the program:
 	
+	$ cd <local repository folder>
+	
 	$ docker pull anamrdias/bgcppchallenge
+	
+	$. docker run -d -it gcc /bin/bash
+	
+	$. docker ps
+	
+	$. docker cp <source code file> <container>:/<source code file>
+	
+	$. docker exec -it <container> /bin/bash
+	
+	$. <execute steps to setup required libraries to compile and execute the program mentioned in the Readme.md>
+	
+	$. g++ <source code file(s)> -o <executable file> -l <library1> -l <library1>
+	
+	$. ./<executable file> <XSD file location
 
+	****************************************************************************************
 	$ docker images
 
 	$ docker run -d -it <image id> /bin/bash
@@ -35,3 +52,4 @@ These are the steps to execute the program:
 	$ cat jsonFile.json
 
 	Note: The steps 10 and 11 are only to check the files created in the step 8
+
