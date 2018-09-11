@@ -20,6 +20,8 @@ string sq = "<xsd:sequence";
 string el = "<xsd:element";
 
 string complexTypeName = "";
+string xmlnsString = "";
+string xmlnsType = "";
 
 static const char alphanum[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "abcdefghijklmnopqrstuvwxyz";
 
@@ -38,6 +40,7 @@ int writeFile() {
 	ifstream infile;
 	ofstream xmlFile;
 
+	bool xmlns = false;
 	bool complex = false;
 	bool sequence = false;
 	bool element = false;
@@ -58,126 +61,147 @@ int writeFile() {
 		getline(infile, STRING);
 		conteudo.push_back(content());
 		conteudo[i].line = STRING;
-		//cout << STRING << endl;
 		size_t pos = conteudo[i].line.find(ct);
+		size_t posXmlns = conteudo[i].line.find("xmlns:");
+		
+		if (xmlns) {
+			if (complex) {
+				if (sequence) {
+					size_t posEL = conteudo[i].line.find(el);
 
-		if (complex) {
-			if (sequence) {
-				size_t posEL = conteudo[i].line.find(el);
+					if (posEL != std::string::npos) {
 
-				if (posEL != std::string::npos) {
-					
-					string strEL = conteudo[i].line.substr(posEL);
-					
-					//Name
-					size_t firstLimEL = strEL.find("name=");
-					string firstEL = strEL.substr(firstLimEL);
+						string strEL = conteudo[i].line.substr(posEL);
 
-					string firtStrEL = firstEL.erase(0, 6);
+						//Name
+						size_t firstLimEL = strEL.find("name=");
+						string firstEL = strEL.substr(firstLimEL);
 
-					size_t endStrEL = firtStrEL.find("\"");
-					string endEL = firtStrEL.erase(endStrEL);
-					
-					//Type
-					size_t firstType = strEL.find("type=");
-					string firstELType = strEL.substr(firstType);
+						string firtStrEL = firstEL.erase(0, 6);
 
-					string firtStrType = firstELType.erase(0, 6);
+						size_t endStrEL = firtStrEL.find("\"");
+						string endEL = firtStrEL.erase(endStrEL);
 
-					size_t endStrType = firtStrType.find("\"");
-					string endType = firtStrType.erase(endStrType);
-					
+						//Type
+						size_t firstType = strEL.find("type=");
+						string firstELType = strEL.substr(firstType);
 
-					if (endType == "bit:"+complexTypeName) {
-						xmlFile << "<" << endEL << ">" << endl;
+						string firtStrType = firstELType.erase(0, 6);
 
-						int jsonSize = static_cast <int> (jsonElements.size());
-						jsonElements.push_back(content());
-						jsonElements[jsonSize].line = "{ \n \"" + endEL + "\": {\n";
+						size_t endStrType = firtStrType.find("\"");
+						string endType = firtStrType.erase(endStrType);
 
-						int size = static_cast <int> (elementos.size());
 
-						for (int i = 0; i < size; i++)
-						{
-							xmlFile << elementos[i].line;
-
+						if (endType == "bit:" + complexTypeName) {
+							xmlFile << "<" << xmlnsType << ":" << endEL << " " << xmlnsString << ">" << endl;
 							int jsonSize = static_cast <int> (jsonElements.size());
 							jsonElements.push_back(content());
-							
-							if (i == size - 1) {
-								jsonElements[jsonSize].line = jsonChild[i].line + "\n";
+							jsonElements[jsonSize].line = "{ \n \"" + endEL + "\": {\n";
+
+							int size = static_cast <int> (elementos.size());
+
+							for (int i = 0; i < size; i++)
+							{
+								xmlFile << elementos[i].line;
+
+								int jsonSize = static_cast <int> (jsonElements.size());
+								jsonElements.push_back(content());
+
+								if (i == size - 1) {
+									jsonElements[jsonSize].line = jsonChild[i].line + "\n";
+
+								}
+								else
+									jsonElements[jsonSize].line = jsonChild[i].line + ",\n";
+
 
 							}
-							else
-								jsonElements[jsonSize].line = jsonChild[i].line + ",\n";
-							
+							elementos.clear();
+							jsonChild.clear();
+							xmlFile << "</" << xmlnsType << ":" << endEL << ">" << endl;
+
+							int jsonSizeT = static_cast <int> (jsonElements.size());
+							jsonElements.push_back(content());
+							jsonElements[jsonSizeT].line = "} \n} \n";
+
+							xmlFile.close();
+							numElemnts = 0;
+						}
+						else if (endType == "xsd:string") {
+							int size = static_cast <int> (elementos.size());
+							elementos.push_back(content());
+
+							string myElement = "<" + endEL + ">" + alphanum[(time) % stringLength] + "</" + endEL + "> \n";
+							elementos[size].line = myElement;
+
+							int jsonSizeChild = static_cast <int> (jsonChild.size());
+							jsonChild.push_back(content());
+							jsonChild[jsonSizeChild].line = "\"" + endEL + "\": \"" + alphanum[(time) % stringLength] + "\"";
+
 
 						}
-						elementos.clear();
-						jsonChild.clear();
-						xmlFile << "</" << endEL << ">" << endl;
+						else if (endType == "xsd:int") {
+							int size = static_cast <int> (elementos.size());
+							elementos.push_back(content());
 
-						int jsonSizeT = static_cast <int> (jsonElements.size());
-						jsonElements.push_back(content());
-						jsonElements[jsonSizeT].line = "} \n} \n";
+							string myElement = "<" + endEL + ">" + sss.str() + "</" + endEL + "> \n";
+							elementos[size].line = myElement;
 
-						xmlFile.close();
-						numElemnts = 0;
-					}
-					else if (endType == "xsd:string") {
-						int size = static_cast <int> (elementos.size());
-						elementos.push_back(content());
-						
-						string myElement = "<" + endEL + ">" + alphanum[(time) % stringLength] + "</" + endEL + "> \n" ;
-						elementos[size].line = myElement;
-						
-						int jsonSizeChild = static_cast <int> (jsonChild.size());
-						jsonChild.push_back(content());
-						jsonChild[jsonSizeChild].line = "\"" + endEL + "\": \"" + alphanum[(time) % stringLength] + "\"";
+							int jsonSizeChild = static_cast <int> (jsonChild.size());
+							jsonChild.push_back(content());
+							jsonChild[jsonSizeChild].line = "\"" + endEL + "\": \"" + sss.str() + "\"";
 
+						}
 
-					}
-					else if (endType == "xsd:int") {
-						int size = static_cast <int> (elementos.size());
-						elementos.push_back(content());
-
-						string myElement = "<" + endEL + ">" + sss.str() + "</" + endEL + "> \n";
-						elementos[size].line = myElement;
-
-						int jsonSizeChild = static_cast <int> (jsonChild.size());
-						jsonChild.push_back(content());
-						jsonChild[jsonSizeChild].line = "\"" + endEL + "\": \"" + sss.str() + "\"";
-						
 					}
 
 				}
-				
+				else {
+					size_t posSQ = conteudo[i].line.find(sq);
+					if (posSQ != std::string::npos) {
+						string strSQ = conteudo[i].line.substr(posSQ);
+						sequence = true;
+					}
+
+				}
+
 			}
 			else {
-				size_t posSQ = conteudo[i].line.find(sq);
-				if (posSQ != std::string::npos) {
-					string strSQ = conteudo[i].line.substr(posSQ);
-					sequence = true;
+				if (pos != std::string::npos) {
+					string str = conteudo[i].line.substr(pos);
+					size_t firstLim = str.find("name=");
+					string first = str.substr(firstLim);
+
+					string firtStr = first.erase(0, 6);
+
+					size_t endStr = firtStr.find("\"");
+					string end = firtStr.erase(endStr);
+					complexTypeName = end;
+
+					complex = true;
 				}
-
 			}
+		}else{
+			if (posXmlns != std::string::npos) {
+				string strXmlns = conteudo[i].line.substr(posXmlns);
+				size_t findXmlns = strXmlns.rfind("xmlns:");
+				string found = strXmlns.substr(findXmlns);
 
-		}
-		else {
-			if (pos != std::string::npos) {
-				string str = conteudo[i].line.substr(pos);
+				size_t del = found.find("targetNamespace");
+				string eliminar = found.erase(del);
+				xmlnsString = eliminar;
 
-				size_t firstLim = str.find("name=");
-				string first = str.substr(firstLim);
+				size_t delXmlns = eliminar.find("=\"");
+				string delXmlns1 = eliminar.erase(delXmlns);
+			
+				string findType = delXmlns1.erase(0,6);
+				xmlnsType = findType;
 
-				string firtStr = first.erase(0, 6);
-
-				size_t endStr = firtStr.find("\"");
-				string end = firtStr.erase(endStr);
-				complexTypeName = end;
-				complex = true;
+				xmlns = true;
 			}
+		
 		}
+		
 
 		i++;
 
@@ -203,7 +227,7 @@ int jsonFile() {
 	return 0;
 }
 
-int main(){
+int main(int argc, char *argv[]){
      
 	int input;
 	
