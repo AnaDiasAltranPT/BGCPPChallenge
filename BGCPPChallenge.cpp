@@ -230,12 +230,14 @@ int jsonFile() {
 
 int main(int argc, char *argv[]){
      
-	int input;
+	string input;
 	
 	do{
 		printf("Menu: \n 1 - Create a XML file \n 2 - Export the XML file to JSON \n 0 - Exit \nSelect an option:");
 
 		cin >> input;
+		char option = input.at(0);
+
 
 		if (argc == 2) {
 			printf("The argument supplied is %s\n", argv[1]);
@@ -249,7 +251,7 @@ int main(int argc, char *argv[]){
 		}
 
 
-		switch (input)
+		switch (option)
 		{
 		case 1:
 			writeFile();
@@ -261,7 +263,7 @@ int main(int argc, char *argv[]){
 			break;
 		}
 
-	} while (input != 0);
+	} while (input != "0");
 	
 	
 	return 0;
