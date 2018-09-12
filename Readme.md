@@ -12,7 +12,7 @@ These are the steps to execute the program:
 	
 	$ cd <local repository folder>
 	
-	$ docker pull anamrdias/bgcppchallenge
+	$ git clone https://github.com/AnaDiasAltranPT/BGCPPChallenge.git
 	
 	$ docker run -d -it gcc /bin/bash
 	
@@ -22,11 +22,9 @@ These are the steps to execute the program:
 	
 	$ docker exec -it <container> /bin/bash
 	
-	$ <execute steps to setup required libraries to compile and execute the program mentioned in the Readme.md>
+	$ g++ <source code file(s)> -o <executable file>
 	
-	$ g++ <source code file(s)> -o <executable file> -l <library1> -l <library1>
-	
-	$ ./<executable file> <XSD file location
+	$ ./<executable file> <XSD file location>
 	
 	$ cat xmlFile.xml
 
